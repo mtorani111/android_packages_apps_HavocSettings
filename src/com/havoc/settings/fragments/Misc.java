@@ -37,6 +37,8 @@ public class Misc extends SettingsPreferenceFragment
     public static final String TAG = "Misc";
 
     private static final String MEDIA_SCANNER_ON_BOOT = "media_scanner_on_boot";
+    private static final String KEY_DEVICE_PART = "advanced_controls";
+    private static final String KEY_DEVICE_PART_PACKAGE_NAME = "com.thht.settings.device";
 
     private ListPreference mMSOB;
 
@@ -45,6 +47,11 @@ public class Misc extends SettingsPreferenceFragment
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.havoc_settings_misc);
+
+        // Advanced Controls
+        if (!com.havoc.settings.preferences.Utils.isPackageInstalled(getActivity(), KEY_DEVICE_PART_PACKAGE_NAME)) {
+            getPreferenceScreen().removePreference(findPreference(KEY_DEVICE_PART));
+        }
 
         // MediaScanner behavior on boot
         mMSOB = (ListPreference) findPreference(MEDIA_SCANNER_ON_BOOT);
